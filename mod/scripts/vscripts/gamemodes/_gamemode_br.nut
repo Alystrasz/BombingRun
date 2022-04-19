@@ -3,6 +3,7 @@ global function _BR_Init
 global bool IS_BR = false
 struct {
 	bool bombHasBeenDefused
+	entity bomb = null
 } round;
 
 void function _BR_Init() {
@@ -29,6 +30,9 @@ int function BombingRunDecideWinner()
 void function SetupLevel() 
 {
 	round.bombHasBeenDefused = false
+	if (round.bomb)
+		round.bomb.Destroy()
+	round.bomb = null
 	thread CheckBombSite()
 }
 
@@ -78,6 +82,7 @@ function SpawnBomb(entity player)
 	bomb.SetAngles( < -90, -1*pAngles.y, pAngles.z> )
 	bomb.kv.solid = SOLID_VPHYSICS
 	DispatchSpawn( bomb )
+	round.bomb = bomb
 
 	thread StartExplosionCountdown(bomb, player)
 
@@ -98,7 +103,7 @@ function CheckHoldState(entity bomb, int delay)
     float currTime = Time()
 	vector origin = bomb.GetOrigin()
 
-	while(true)
+	while(GamePlayingOrSuddenDeath())
 	{
     	float currTime = Time()
 		foreach(player in GetPlayerArray())
@@ -181,5 +186,7 @@ function TriggerExplosion(entity inflictor)
 		outerRadius,						// outer radius
 		0 )									// dist from attacker
 
-	inflictor.Destroy()
+	inflictor.Hide()
+	inflictor.NotSolid()
+	inflictor.UnsetUsable()
 }
