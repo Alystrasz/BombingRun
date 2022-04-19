@@ -144,15 +144,13 @@ function StartExplosionCountdown(entity inflictor, entity player)
 
 	for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
 		if (round.bombHasBeenDefused) return;
-		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
-		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
+		EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntomarked")
 		wait lowTickRateDuration
 	}
 
 	for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
 		if (round.bombHasBeenDefused) return;
-		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
-		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
+		EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntoyouaremarked")
 		wait highTickRateDuration
 	}
 
