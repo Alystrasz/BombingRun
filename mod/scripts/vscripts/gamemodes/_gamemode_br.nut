@@ -75,10 +75,10 @@ function SpawnBomb(entity player)
 	bomb.SetAngles( < -90, -1*pAngles.y, pAngles.z> )
 	bomb.kv.solid = SOLID_VPHYSICS
 	DispatchSpawn( bomb )
-	thread StartExplosionCountdown(bomb)
+	thread StartExplosionCountdown(bomb, player)
 }
 
-function StartExplosionCountdown(entity inflictor) 
+function StartExplosionCountdown(entity inflictor, entity player) 
 {
 	int duration = GetConVarInt("br_bomb_explosion_delay")
 	vector origin = inflictor.GetOrigin()
@@ -100,6 +100,8 @@ function StartExplosionCountdown(entity inflictor)
 		wait highTickRateDuration
 	}
 
+	// if it blows, team who planted it wins
+	SetWinner (player.GetTeam() )
 	thread TriggerExplosion(inflictor)
 }
 
