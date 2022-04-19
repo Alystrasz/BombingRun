@@ -119,9 +119,12 @@ function CheckHoldState(entity bomb, int delay)
 				}
 				player.MovementDisable()
 				player.ConsumeDoubleJump()
+				var timeLeft = format("%.1f", (delay - (currTime - times[player.GetPlayerName()])).tofloat())
+				bomb.SetUsePrompts( "Hold %use% to defuse bomb (" + timeLeft + "s)", "Hold %use% to defuse bomb (" + timeLeft + "s)" )
 			} else
 			{
 				times[player.GetPlayerName()] <- currTime
+				bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
 				player.MovementEnable()
 			}
 		}
