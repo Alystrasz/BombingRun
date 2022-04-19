@@ -1,0 +1,32 @@
+{
+    "Name": "Bombing Run",
+    "LoadPriority": 2,
+    "Version": "1.0.0",
+    "RequiredOnClient": true,
+    "ConVars": [
+        {
+            "Name": "br_bomb_explosion_delay",
+            "DefaultValue": "10"
+        }
+    ],
+    "Scripts": [
+        {
+            "Path": "gamemodes/sh_gamemode_br.nut",
+            "RunOn": "SERVER || CLIENT",
+            "ServerCallback": {
+                "Before": "BRMode_Init"
+            },
+            "ClientCallback": {
+                "Before": "BRMode_Init"
+            }
+        },
+        {
+            "Path": "gamemodes/cl_gamemode_br.nut",
+            "RunOn": "CLIENT"
+        },
+        {
+            "Path": "gamemodes/_gamemode_br.nut",
+            "RunOn": "SERVER"
+        }
+    ]
+}

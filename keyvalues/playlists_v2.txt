@@ -1,0 +1,62 @@
+playlists
+{
+    Gamemodes
+    {
+        br
+		{
+			inherit defaults
+			vars
+			{
+				name "Bombing run"
+				lobbytitle "Lobby: Bombing run"
+				description "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				hint "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				abbreviation "BR"
+				
+				max_players 16
+				max_teams 2
+				classic_mp 1
+				scorelimit 100
+				timelimit 10
+				roundtimelimit 3
+				roundscorelimit 5
+				
+				gamemode_score_hint #GAMEMODE_SCORE_HINT_TDM
+			}
+		}
+    }
+    Playlists
+    {
+        br
+		{
+			inherit defaults
+			vars
+			{
+				name "Bombing run"
+				lobbytitle "Lobby: Bombing run"
+				description "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				hint "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				abbreviation "BR"
+				image ffa
+				max_players 16
+				max_teams 2
+				classic_mp 1
+				scorelimit 5
+				roundtimelimit 2
+				roundscorelimit 5
+				
+				gamemode_score_hint #GAMEMODE_SCORE_HINT_TDM
+			}	
+			gamemodes
+			{
+				br
+				{
+					maps
+					{
+                        mp_thaw 1
+					}
+				}
+			}
+		}
+    }
+}
