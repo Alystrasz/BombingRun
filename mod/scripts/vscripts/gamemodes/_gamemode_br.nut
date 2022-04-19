@@ -1,7 +1,7 @@
 untyped
 global function _BR_Init
 global bool IS_BR = false
-
+bool bombHasBeenDefused
 
 void function _BR_Init() {
 	IS_BR = true
@@ -26,6 +26,7 @@ int function BombingRunDecideWinner()
 
 void function SetupLevel() 
 {
+	bombHasBeenDefused = false
 	thread CheckBombSite()
 }
 
@@ -75,7 +76,50 @@ function SpawnBomb(entity player)
 	bomb.SetAngles( < -90, -1*pAngles.y, pAngles.z> )
 	bomb.kv.solid = SOLID_VPHYSICS
 	DispatchSpawn( bomb )
+
 	thread StartExplosionCountdown(bomb, player)
+
+	// set bomb as defusable
+	bomb.SetUsable()
+	bomb.SetUsableByGroup( "pilot" )
+	bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
+	thread CheckHoldState(bomb, 3)
+}
+
+/**
+  * This allows to trigger some code if a player kept use button hold for a given 
+  * time (in seconds).
+  **/
+function CheckHoldState(entity bomb, int delay)
+{
+	table times = {}
+    float currTime = Time()
+	vector origin = bomb.GetOrigin()
+
+	while(true)
+	{
+    	float currTime = Time()
+		foreach(player in GetPlayerArray())
+		{
+			if (player.GetPlayerName() in times && player.UseButtonPressed() && Distance(origin, player.GetOrigin()) < 80)
+			{
+				if (currTime - times[player.GetPlayerName()] >= delay)
+				{
+					bombHasBeenDefused = true
+					bomb.UnsetUsable()
+					SetWinner(player.GetTeam())
+					return
+				}
+				player.MovementDisable()
+				player.ConsumeDoubleJump()
+			} else
+			{
+				times[player.GetPlayerName()] <- currTime
+				player.MovementEnable()
+			}
+		}
+		WaitFrame()
+	}
 }
 
 function StartExplosionCountdown(entity inflictor, entity player) 
@@ -89,16 +133,20 @@ function StartExplosionCountdown(entity inflictor, entity player)
 	int highTickRateDuration = 1
 
 	for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
+		if (bombHasBeenDefused) return;
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		wait lowTickRateDuration
 	}
 
 	for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
+		if (bombHasBeenDefused) return;
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		wait highTickRateDuration
 	}
+
+	if (bombHasBeenDefused) return;
 
 	// if it blows, team who planted it wins
 	SetWinner (player.GetTeam() )
