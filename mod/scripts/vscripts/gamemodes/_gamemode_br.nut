@@ -5,7 +5,27 @@ global bool IS_BR = false
 
 void function _BR_Init() {
 	IS_BR = true
+
 	ClassicMP_SetCustomIntro( ClassicMP_DefaultNoIntro_Setup, 10 )
+	SetShouldUseRoundWinningKillReplay( true )
+	SetRoundBased( true )
+	SetSwitchSidesBased( true )
+	SetRespawnsEnabled( false )
+	Riff_ForceTitanAvailability( eTitanAvailability.Never )
+	Riff_ForceSetEliminationMode( eEliminationMode.Pilots )
+	ScoreEvent_SetupEarnMeterValuesForMixedModes()
+	AddCallback_GameStateEnter( eGameState.Prematch, SetupLevel )
+	SetTimeoutWinnerDecisionFunc( BombingRunDecideWinner )
+}
+
+// If no team planted bomb, no one wins.
+int function BombingRunDecideWinner()
+{
+	return TEAM_UNASSIGNED
+}
+
+void function SetupLevel() 
+{
 	thread CheckBombSite()
 }
 
