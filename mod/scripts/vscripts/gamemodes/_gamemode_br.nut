@@ -1,7 +1,9 @@
 untyped
 global function _BR_Init
 global bool IS_BR = false
-bool bombHasBeenDefused
+struct {
+	bool bombHasBeenDefused
+} round;
 
 void function _BR_Init() {
 	IS_BR = true
@@ -26,7 +28,7 @@ int function BombingRunDecideWinner()
 
 void function SetupLevel() 
 {
-	bombHasBeenDefused = false
+	round.bombHasBeenDefused = false
 	thread CheckBombSite()
 }
 
@@ -105,7 +107,7 @@ function CheckHoldState(entity bomb, int delay)
 			{
 				if (currTime - times[player.GetPlayerName()] >= delay)
 				{
-					bombHasBeenDefused = true
+					round.bombHasBeenDefused = true
 					bomb.UnsetUsable()
 					SetWinner(player.GetTeam())
 					return
@@ -133,20 +135,20 @@ function StartExplosionCountdown(entity inflictor, entity player)
 	int highTickRateDuration = 1
 
 	for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
-		if (bombHasBeenDefused) return;
+		if (round.bombHasBeenDefused) return;
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		wait lowTickRateDuration
 	}
 
 	for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
-		if (bombHasBeenDefused) return;
+		if (round.bombHasBeenDefused) return;
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		EmitSoundAtPosition( TEAM_IMC, origin, "HUD_match_start_timer_5_seconds_1P")
 		wait highTickRateDuration
 	}
 
-	if (bombHasBeenDefused) return;
+	if (round.bombHasBeenDefused) return;
 
 	// if it blows, team who planted it wins
 	SetWinner (player.GetTeam() )
