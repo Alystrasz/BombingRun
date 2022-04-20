@@ -84,6 +84,8 @@ function SpawnBomb(entity player)
 	DispatchSpawn( bomb )
 	round.bomb = bomb
 
+	SendTeamMessage( "Bomb has been planted by " + player.GetPlayerName() + ".", player.GetTeam() )
+
 	thread StartExplosionCountdown(bomb, player)
 
 	// set bomb as defusable
@@ -114,6 +116,7 @@ function CheckHoldState(entity bomb, int delay)
 				{
 					round.bombHasBeenDefused = true
 					bomb.UnsetUsable()
+					SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
 					SetWinner(player.GetTeam())
 					return
 				}
@@ -190,4 +193,15 @@ function TriggerExplosion(entity inflictor)
 	inflictor.Hide()
 	inflictor.NotSolid()
 	inflictor.UnsetUsable()
+}
+
+function SendTeamMessage (string message, int team)
+{
+	foreach(player in GetPlayerArray()) 
+	{
+		if (player.GetTeam() == team)
+		{
+			Chat_ServerPrivateMessage(player, message, false)
+		}
+	}
 }

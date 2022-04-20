@@ -10,7 +10,7 @@ Custom "Global Offensive" gamemode for Titanfall2.
 - [ ] Put some light effects on the bomb
 - [ ] Bomb holder indicator (YOU HAVE THE BOMB)
 - [ ] Bomb carrying system (being able to give the bomb to somebody else)
-- [ ] Chat team messages
+- [x] Chat team messages
 - [ ] Bomb sites UI indicators
 
 #### Fixes
