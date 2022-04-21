@@ -176,7 +176,8 @@ function TriggerExplosion(entity inflictor)
 
 	thread __CreateFxInternal( TITAN_NUCLEAR_CORE_FX_1P, null, "", origin, Vector(0,RandomInt(360),0), C_PLAYFX_SINGLE, null, 1, inflictor )
 	thread __CreateFxInternal( TITAN_NUCLEAR_CORE_FX_3P, null, "", origin + Vector( 0, 0, -100 ), Vector(0,RandomInt(360),0), C_PLAYFX_SINGLE, null, 6, inflictor )
-
+	
+	CreateShake(inflictor.GetOrigin())
 	EmitSoundAtPosition( TEAM_IMC, origin, "titan_nuclear_death_explode" )
 	EmitSoundAtPosition( TEAM_MILITIA, origin, "titan_nuclear_death_explode" )
 
