@@ -27,6 +27,21 @@
         {
             "Path": "gamemodes/_gamemode_br.nut",
             "RunOn": "SERVER"
+        },
+        
+        {
+            "Path": "classes/bomb.nut",
+            "RunOn": "SERVER",
+            "ServerCallback": {
+                "Before": "InitBombClass"
+            }
+        },
+        {
+            "Path": "classes/zone.nut",
+            "RunOn": "SERVER",
+            "ServerCallback": {
+                "Before": "InitBombingZoneClass"
+            }
         }
     ]
 }
