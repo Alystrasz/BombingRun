@@ -8,11 +8,13 @@ void function InitBombClass()
 		origin = null
 		terrorist = null
 		bomb = null
+        delay = 0
 
 		constructor (entity player)
 		{
 			this.terrorist = player
 			this.origin = player.GetOrigin()
+            this.delay = 3
 
 			foreach(entity online in GetPlayerArray()) {
                 Remote_CallFunction_NonReplay(online, "ServerCallback_AnnounceBombPlanted")
@@ -28,24 +30,24 @@ void function InitBombClass()
 
             SendTeamMessage( "Bomb has been planted by " + player.GetPlayerName() + ".", player.GetTeam() )
 
-            thread this._StartExplosionCountdown(bomb, player)
+            thread this._StartExplosionCountdown()
 
             // set bomb as defusable
             bomb.SetUsable()
             bomb.SetUsableByGroup( "pilot" )
             bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
-            thread this._CheckHoldState(bomb, 3)
+            thread this._CheckHoldState()
 		}
 
 		/**
 		  * This allows to trigger some code if a player kept use button hold for a given 
 		  * time (in seconds).
 		  **/
-		function _CheckHoldState(entity bomb, int delay)
+		function _CheckHoldState()
 		{
 			table times = {}
 			float currTime = Time()
-			vector origin = bomb.GetOrigin()
+			vector origin = expect entity(this.bomb).GetOrigin()
 
 			while(GamePlayingOrSuddenDeath())
 			{
@@ -54,22 +56,22 @@ void function InitBombClass()
 				{
 					if (player.GetPlayerName() in times && player.UseButtonPressed() && Distance(origin, player.GetOrigin()) < 80)
 					{
-						if (currTime - times[player.GetPlayerName()] >= delay)
+						if (currTime - times[player.GetPlayerName()] >= this.delay)
 						{
 							round.bombHasBeenDefused = true
-							bomb.UnsetUsable()
+							this.bomb.UnsetUsable()
 							SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
 							SetWinner(player.GetTeam())
 							return
 						}
 						player.MovementDisable()
 						player.ConsumeDoubleJump()
-						var timeLeft = format("%.1f", (delay - (currTime - times[player.GetPlayerName()])).tofloat())
-						bomb.SetUsePrompts( "Hold %use% to defuse bomb (" + timeLeft + "s)", "Hold %use% to defuse bomb (" + timeLeft + "s)" )
+						var timeLeft = format("%.1f", (this.delay - (currTime - times[player.GetPlayerName()])).tofloat())
+						this.bomb.SetUsePrompts( "Hold %use% to defuse bomb (" + timeLeft + "s)", "Hold %use% to defuse bomb (" + timeLeft + "s)" )
 					} else
 					{
 						times[player.GetPlayerName()] <- currTime
-						bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
+						this.bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
 						player.MovementEnable()
 					}
 				}
@@ -77,10 +79,10 @@ void function InitBombClass()
 			}
 		}
 
-		function _StartExplosionCountdown(entity inflictor, entity player) 
+		function _StartExplosionCountdown() 
 		{
 			int duration = GetConVarInt("br_bomb_explosion_delay")
-			vector origin = inflictor.GetOrigin()
+			vector origin = expect entity(this.bomb).GetOrigin()
 			int step = (duration / 3).tointeger()
 			int lowTickRateSoundDuration = step*2
 			int lowTickRateDuration = 2
@@ -102,7 +104,7 @@ void function InitBombClass()
 			if (round.bombHasBeenDefused) return;
 
 			// if it blows, team who planted it wins
-			SetWinner (player.GetTeam() )
+			SetWinner ( expect entity(this.terrorist).GetTeam() )
 			thread this._TriggerExplosion()
 		}
 
