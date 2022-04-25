@@ -71,7 +71,7 @@ void function InitBombClass()
 					} else
 					{
 						times[player.GetPlayerName()] <- currTime
-						this.bomb.SetUsePrompts( "Hold %use% to defuse bomb", "Hold %use% to defuse bomb" )
+						this.bomb.SetUsePrompts( "#GAMEMODE_BR_BOMB_DEFUSE_PROMPT", "#GAMEMODE_BR_BOMB_DEFUSE_PROMPT" )
 						player.MovementEnable()
 					}
 				}

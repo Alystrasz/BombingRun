@@ -7,10 +7,10 @@ playlists
 			inherit defaults
 			vars
 			{
-				name "Bombing run"
-				lobbytitle "Lobby: Bombing run"
-				description "Plant a bomb at the enemy hardpoint. Protect yours from the same."
-				hint "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				name "#GAMEMODE_BR"
+				lobbytitle "#GAMEMODE_BR_LOBBY"
+				description "#GAMEMODE_BR_DESC"
+				hint "#GAMEMODE_BR_DESC"
 				abbreviation "BR"
 				
 				max_players 16
@@ -32,10 +32,10 @@ playlists
 			inherit defaults
 			vars
 			{
-				name "Bombing run"
-				lobbytitle "Lobby: Bombing run"
-				description "Plant a bomb at the enemy hardpoint. Protect yours from the same."
-				hint "Plant a bomb at the enemy hardpoint. Protect yours from the same."
+				name "GAMEMODE_BR"
+				lobbytitle "#GAMEMODE_BR_LOBBY"
+				description "#GAMEMODE_BR_DESC"
+				hint "#GAMEMODE_BR_DESC"
 				abbreviation "BR"
 				image ffa
 				max_players 16

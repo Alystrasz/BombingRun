@@ -43,5 +43,8 @@
                 "Before": "InitBombingZoneClass"
             }
         }
+    ],
+    "Localisation": [
+        "resource/northstar_bombing_run_%language%.txt"
     ]
 }

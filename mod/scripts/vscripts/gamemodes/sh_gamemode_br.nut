@@ -1,8 +1,6 @@
 global function BRMode_Init
 
 global const GAMEMODE_BR = "br"
-global const BR_NAME = "Bombing Run"
-global const BR_DESC = "Plant a bomb at the enemy hardpoint. Protect yours from the same."
 
 void function BRMode_Init() {
     AddCallback_OnCustomGamemodesInit( CreateGamemode )	
@@ -11,8 +9,8 @@ void function BRMode_Init() {
 
 void function CreateGamemode() {
     GameMode_Create( GAMEMODE_BR )
-    GameMode_SetName( GAMEMODE_BR, BR_NAME )
-    GameMode_SetDesc( GAMEMODE_BR, BR_DESC )
+    GameMode_SetName( GAMEMODE_BR, "#GAMEMODE_BR" )
+    GameMode_SetDesc( GAMEMODE_BR, "#GAMEMODE_BR_DESC" )
     
     // No titans so use titan thing for batteries
 	GameMode_AddScoreboardColumnData( GAMEMODE_BR, "#SCOREBOARD_PILOT_KILLS", PGS_PILOT_KILLS, 2)

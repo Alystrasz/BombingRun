@@ -7,12 +7,9 @@ void function Cl_BR_Init() {
 }
 
 void function ServerCallback_AnnounceBombPlanted()
-{
-	string announcementString = "Bomb planted"
-	string announcementSubString = "Bomb has been planted!"
-	
-	AnnouncementData announcement = Announcement_Create( announcementString )
-	Announcement_SetSubText( announcement, announcementSubString )
+{	
+	AnnouncementData announcement = Announcement_Create( "#GAMEMODE_BR_BOMB_PLANTED_TITLE" )
+	Announcement_SetSubText( announcement, "#GAMEMODE_BR_BOMB_PLANTED_TEXT" )
 	Announcement_SetTitleColor( announcement, <1,0,0> )
 	Announcement_SetPurge( announcement, true )
 	Announcement_SetPriority( announcement, 200 ) //Be higher priority than Titanfall ready indicator etc
