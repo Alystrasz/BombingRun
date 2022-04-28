@@ -22,8 +22,7 @@ void function InitBombClass()
             entity bomb = CreateEntity( "prop_dynamic" )
             bomb.SetValueForModelKey($"models/weapons/at_satchel_charge/at_satchel_charge.mdl")
             bomb.SetOrigin( player.GetOrigin() )
-            vector pAngles = player.GetAngles()
-            bomb.SetAngles( < -90, -1*pAngles.y, pAngles.z> )
+            bomb.SetAngles( < -90, 0, 0> )
             bomb.kv.solid = SOLID_VPHYSICS
             DispatchSpawn( bomb )
             this.bomb = bomb
@@ -83,8 +82,13 @@ void function InitBombClass()
 		{
 			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
 			WaitFrame()
-			entity light = CreateLightSprite (pos, <0,0,0>, "255 255 255", 1)
+			vector lightpos = pos
+			lightpos.z += 3.5
+			lightpos.y += 1.7
+			lightpos.x -= 0.65
+			entity light = CreateLightSprite (lightpos, <0,0,0>, "255 255 255", 0.2)
 			WaitFrame()
+			wait 1
 			light.Destroy()
 		}
 
