@@ -79,8 +79,10 @@ void function InitBombClass()
 			}
 		}
 
-		function _LightBlink(vector pos)
+		function _Bip(vector pos, bool lastSeconds)
 		{
+			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
+			WaitFrame()
 			entity light = CreateLightSprite (pos, <0,0,0>, "255 255 255", 1)
 			WaitFrame()
 			light.Destroy()
@@ -98,15 +100,13 @@ void function InitBombClass()
 
 			for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
 				if (round.bombHasBeenDefused) return;
-				EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntomarked")
-				thread this._LightBlink(origin)
+				thread this._Bip(origin, false)
 				wait lowTickRateDuration
 			}
 
 			for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
 				if (round.bombHasBeenDefused) return;
-				EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntoyouaremarked")
-				thread this._LightBlink(origin)
+				thread this._Bip(origin, true)
 				wait highTickRateDuration
 			}
 
