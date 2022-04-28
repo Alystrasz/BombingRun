@@ -79,6 +79,13 @@ void function InitBombClass()
 			}
 		}
 
+		function _LightBlink(vector pos)
+		{
+			entity light = CreateLightSprite (pos, <0,0,0>, "255 255 255", 1)
+			WaitFrame()
+			light.Destroy()
+		}
+
 		function _StartExplosionCountdown() 
 		{
 			int duration = GetConVarInt("br_bomb_explosion_delay")
@@ -92,12 +99,14 @@ void function InitBombClass()
 			for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
 				if (round.bombHasBeenDefused) return;
 				EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntomarked")
+				thread this._LightBlink(origin)
 				wait lowTickRateDuration
 			}
 
 			for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
 				if (round.bombHasBeenDefused) return;
 				EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "ui_ingame_markedfordeath_countdowntoyouaremarked")
+				thread this._LightBlink(origin)
 				wait highTickRateDuration
 			}
 
