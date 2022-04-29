@@ -5,7 +5,15 @@
     "RequiredOnClient": true,
     "ConVars": [
         {
-            "Name": "br_bomb_explosion_delay",
+            "Name": "br_bomb_2sec_ticks_count",
+            "DefaultValue": "5"
+        },
+        {
+            "Name": "br_bomb_1sec_ticks_count",
+            "DefaultValue": "5"
+        },
+        {
+            "Name": "br_bomb_halfsec_ticks_count",
             "DefaultValue": "10"
         }
     ],

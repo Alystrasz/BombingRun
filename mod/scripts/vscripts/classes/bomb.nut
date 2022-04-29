@@ -83,35 +83,37 @@ void function InitBombClass()
 			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
 			WaitFrame()
 			vector lightpos = pos
-			lightpos.z += 3.5
+			lightpos.z += 3.6
 			lightpos.y += 1.7
 			lightpos.x -= 0.65
 			entity light = CreateLightSprite (lightpos, <0,0,0>, "255 255 255", 0.2)
 			WaitFrame()
-			wait 1
 			light.Destroy()
 		}
 
 		function _StartExplosionCountdown() 
 		{
-			int duration = GetConVarInt("br_bomb_explosion_delay")
 			vector origin = expect entity(this.bomb).GetOrigin()
-			int step = (duration / 3).tointeger()
-			int lowTickRateSoundDuration = step*2
-			int lowTickRateDuration = 2
-			int highTickRateSoundDuration = step
-			int highTickRateDuration = 1
+			int two_second_bips_count = GetConVarInt("br_bomb_2sec_ticks_count")
+			int one_second_bips_count = GetConVarInt("br_bomb_1sec_ticks_count")
+			int half_second_bips_count = GetConVarInt("br_bomb_halfsec_ticks_count")
 
-			for (int i=0; i<lowTickRateSoundDuration; i+=lowTickRateDuration) {
+			for (int i=0; i<two_second_bips_count; i+=1) {
 				if (round.bombHasBeenDefused) return;
 				thread this._Bip(origin, false)
-				wait lowTickRateDuration
+				wait 2
 			}
 
-			for (int i=0; i<highTickRateSoundDuration; i+=highTickRateDuration) {
+			for (int i=0; i<one_second_bips_count; i+=1) {
+				if (round.bombHasBeenDefused) return;
+				thread this._Bip(origin, false)
+				wait 1
+			}
+
+			for (int i=0; i<half_second_bips_count; i+=1) {
 				if (round.bombHasBeenDefused) return;
 				thread this._Bip(origin, true)
-				wait highTickRateDuration
+				wait 0.5
 			}
 
 			if (round.bombHasBeenDefused) return;
