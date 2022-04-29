@@ -162,6 +162,7 @@ void function InitBombClass()
 			this.bomb.Hide()
 			this.bomb.NotSolid()
 			this.bomb.UnsetUsable()
+			this.light.Destroy()
 		}
 	}
 }
