@@ -60,6 +60,11 @@ void function InitBombClass()
 						{
 							round.bombHasBeenDefused = true
 							this.bomb.UnsetUsable()
+
+							// greenlight bomb indicator
+							this.light.Destroy()
+							this.light = expect entity(this._CreateLight(origin, "50 255 50"))
+
 							SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
 							SetWinner(player.GetTeam())
 							return
