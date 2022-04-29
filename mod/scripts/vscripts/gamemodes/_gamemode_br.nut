@@ -35,7 +35,7 @@ void function SetupLevel()
 {
 	round.bombHasBeenDefused = false
 	if (round.bomb)
-		round.bomb.Destroy()
+		round.bomb.Destroy()	// TODO method to destroy all attached entities
 	round.bomb = null
 
 	// instanciation test
