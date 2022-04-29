@@ -9,6 +9,7 @@ void function InitBombClass()
 		terrorist = null
 		bomb = null
         delay = 0
+		light = null
 
 		constructor (entity player)
 		{
@@ -78,15 +79,20 @@ void function InitBombClass()
 			}
 		}
 
-		function _Bip(vector pos, bool lastSeconds)
+		function _CreateLight(vector pos, string color)
 		{
-			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
-			WaitFrame()
 			vector lightpos = pos
 			lightpos.z += 3.6
 			lightpos.y += 1.7
 			lightpos.x -= 0.65
-			entity light = CreateLightSprite (lightpos, <0,0,0>, "255 255 255", 0.2)
+			return CreateLightSprite (lightpos, <0,0,0>, color, 0.2)
+		}
+
+		function _Bip(vector pos, bool lastSeconds)
+		{
+			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
+			WaitFrame()
+			entity light = expect entity(this._CreateLight(pos, "255 255 255"))
 			WaitFrame()
 			light.Destroy()
 		}
@@ -104,11 +110,17 @@ void function InitBombClass()
 				wait 2
 			}
 
+			// constant white light
+			this.light = expect entity(this._CreateLight(origin, "255 255 255"))
 			for (int i=0; i<one_second_bips_count; i+=1) {
 				if (round.bombHasBeenDefused) return;
 				thread this._Bip(origin, false)
 				wait 1
 			}
+
+			// constant red light
+			this.light.Destroy()
+			this.light = expect entity(this._CreateLight(origin, "255 0 0"))
 
 			for (int i=0; i<half_second_bips_count; i+=1) {
 				if (round.bombHasBeenDefused) return;
