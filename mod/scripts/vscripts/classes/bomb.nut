@@ -62,7 +62,8 @@ void function InitBombClass()
 							this.bomb.UnsetUsable()
 
 							// greenlight bomb indicator
-							this.light.Destroy()
+							if (this.light)
+								this.light.Destroy()
 							this.light = expect entity(this._CreateLight(origin, "50 255 50"))
 
 							SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
@@ -167,7 +168,15 @@ void function InitBombClass()
 			this.bomb.Hide()
 			this.bomb.NotSolid()
 			this.bomb.UnsetUsable()
-			this.light.Destroy()
+		}
+
+		function Destroy()
+		{
+			this.bomb.Hide()
+			this.bomb.NotSolid()
+			this.bomb.UnsetUsable()
+			if (this.light != null)
+				this.light.Destroy()
 		}
 	}
 }

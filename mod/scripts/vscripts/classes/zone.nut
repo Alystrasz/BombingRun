@@ -48,7 +48,7 @@ void function InitBombingZoneClass()
                         if (currTime - times[player.GetPlayerName()] >= bombPlantDelay)
                         {
                             // plant bomb
-							round.bomb = expect entity(Bomb(player).bomb)
+							round.bomb = Bomb(player)
 
 							print(player.GetPlayerName() + " triggered entity action.");
                             player.MovementEnable()

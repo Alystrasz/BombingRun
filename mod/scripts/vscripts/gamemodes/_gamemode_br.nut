@@ -5,7 +5,7 @@ global bool IS_BR = false
 
 global struct Match {
 	bool bombHasBeenDefused
-	entity bomb = null
+	var bomb = null
 }
 
 global Match round
@@ -35,7 +35,7 @@ void function SetupLevel()
 {
 	round.bombHasBeenDefused = false
 	if (round.bomb)
-		round.bomb.Destroy()	// TODO method to destroy all attached entities
+		round.bomb.Destroy()
 	round.bomb = null
 
 	// instanciation test
