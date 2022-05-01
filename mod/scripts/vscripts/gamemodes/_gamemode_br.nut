@@ -39,7 +39,7 @@ void function SetupLevel()
 	round.bomb = null
 
 	// instanciation test
-	var zone = BombingZone("A", Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+	var zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
 	zone.CheckForBombPlant()
 }
 

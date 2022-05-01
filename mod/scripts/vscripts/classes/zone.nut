@@ -8,8 +8,9 @@ void function InitBombingZoneClass()
         name = null
         volumeMins = null
         volumeMaxs = null
+        indicator = null
 
-        constructor(string name, var volumeMins, vector volumeMax)
+        constructor(string name, int team, var volumeMins, vector volumeMax)
         {
             this.name = name
             this.volumeMins = volumeMins
@@ -26,6 +27,17 @@ void function InitBombingZoneClass()
                     Remote_CallFunction_NonReplay(ent, "ServerCallback_AnnounceEnemyBaseNearby")
                 }
             } )
+
+            // initialize UI indicator
+            this.indicator = CreateEntity( "prop_dynamic" )
+            this.indicator.SetValueForModelKey( $"models/dev/empty_model.mdl" )
+            vector indicatorPos = zoneCenter
+            indicatorPos.z = expect float(this.volumeMaxs.z + 120);
+            this.indicator.SetOrigin( indicatorPos )
+            this.indicator.SetAngles( <0,0,0> )
+            this.indicator.kv.solid = SOLID_VPHYSICS
+            DispatchSpawn( this.indicator )
+            SetTeam( expect entity(this.indicator), team )
         }
 
         function CheckForBombPlant()
