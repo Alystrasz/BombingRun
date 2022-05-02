@@ -6,6 +6,7 @@ global bool IS_BR = false
 global struct Match {
 	bool bombHasBeenDefused
 	var bomb = null
+	var zone = null
 }
 
 global Match round
@@ -21,8 +22,9 @@ void function _BR_Init() {
 	Riff_ForceTitanAvailability( eTitanAvailability.Never )
 	Riff_ForceSetEliminationMode( eEliminationMode.Pilots )
 	ScoreEvent_SetupEarnMeterValuesForMixedModes()
-	AddCallback_GameStateEnter( eGameState.Prematch, SetupLevel )
+	AddCallback_GameStateEnter( eGameState.Prematch, SetupRound )
 	SetTimeoutWinnerDecisionFunc( BombingRunDecideWinner )
+	SetupLevel()
 }
 
 // If no team planted bomb, no one wins.
@@ -31,16 +33,19 @@ int function BombingRunDecideWinner()
 	return TEAM_UNASSIGNED
 }
 
-void function SetupLevel() 
+void function SetupLevel()
+{
+	round.zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+}
+
+void function SetupRound()
 {
 	round.bombHasBeenDefused = false
 	if (round.bomb)
 		round.bomb.Destroy()
 	round.bomb = null
 
-	// instanciation test
-	var zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
-	zone.CheckForBombPlant()
+	round.zone.CheckForBombPlant()
 }
 
 function SendTeamMessage (string message, int team)
