@@ -24,7 +24,8 @@ void function _BR_Init() {
 	ScoreEvent_SetupEarnMeterValuesForMixedModes()
 	AddCallback_GameStateEnter( eGameState.Prematch, SetupRound )
 	SetTimeoutWinnerDecisionFunc( BombingRunDecideWinner )
-	SetupLevel()
+	AddCallback_EntitiesDidLoad( SetupLevel )
+	AddCallback_OnClientConnected( BombingRunInitPlayer )
 }
 
 // If no team planted bomb, no one wins.
@@ -57,4 +58,10 @@ function SendTeamMessage (string message, int team)
 			Chat_ServerPrivateMessage(player, message, false)
 		}
 	}
+}
+
+// TODO call this for all zones
+void function BombingRunInitPlayer( entity player )
+{
+	Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", round.zone.indicator.GetEncodedEHandle(), 0 )
 }

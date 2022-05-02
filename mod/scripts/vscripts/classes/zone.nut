@@ -30,12 +30,14 @@ void function InitBombingZoneClass()
 
             // initialize UI indicator
             this.indicator = CreateEntity( "prop_dynamic" )
-            this.indicator.SetValueForModelKey( $"models/dev/empty_model.mdl" )
+            // this.indicator.SetValueForModelKey( $"models/dev/empty_model.mdl" )
+            this.indicator.SetValueForModelKey( $"models/robots/mobile_hardpoint/mobile_hardpoint.mdl" )
+            this.indicator.kv.modelscale = 0
             vector indicatorPos = zoneCenter
-            indicatorPos.z = expect float(this.volumeMaxs.z + 120);
+            indicatorPos.z = expect float(this.volumeMaxs.z + 400);
             this.indicator.SetOrigin( indicatorPos )
             this.indicator.SetAngles( <0,0,0> )
-            this.indicator.kv.solid = SOLID_VPHYSICS
+            // this.indicator.kv.solid = SOLID_VPHYSICS
             DispatchSpawn( this.indicator )
             SetTeam( expect entity(this.indicator), team )
         }
