@@ -66,6 +66,9 @@ void function InitBombingZoneClass()
 
 							print(player.GetPlayerName() + " triggered entity action.");
                             player.MovementEnable()
+
+                            // send message to all players
+                            PlayDialogueToAllPlayers (player.GetTeam(), "lts_bombPlantedAtk", "lts_bombPlantedDef")
                             return
                         }
                         player.MovementDisable()

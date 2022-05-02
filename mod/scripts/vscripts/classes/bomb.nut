@@ -68,6 +68,9 @@ void function InitBombClass()
 
 							SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
 							SetWinner(player.GetTeam())
+
+							PlayDialogueToAllPlayers (player.GetTeam(), "lts_bombDefusedDef", "lts_bombDefusedAtk")
+
 							return
 						}
 						player.MovementDisable()

@@ -1,6 +1,7 @@
 untyped
 global function _BR_Init
 global function SendTeamMessage
+global function PlayDialogueToAllPlayers
 global bool IS_BR = false
 
 global struct Match {
@@ -64,4 +65,12 @@ function SendTeamMessage (string message, int team)
 void function BombingRunInitPlayer( entity player )
 {
 	Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", round.zone.indicator.GetEncodedEHandle(), 0 )
+}
+
+void function PlayDialogueToAllPlayers (int attacker_team, string attacker_message, string defender_message)
+{
+	foreach(player in GetPlayerArray()) 
+	{
+		PlayFactionDialogueToPlayer( player.GetTeam() == attacker_team ? attacker_message : defender_message, player )
+	}
 }
