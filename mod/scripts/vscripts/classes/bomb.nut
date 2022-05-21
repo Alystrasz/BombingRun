@@ -88,6 +88,15 @@ void function InitBombClass()
 			}
 		}
 
+		/**
+		  * This allows the bomb to check if current round is over, not to explode if other bomb 
+		  * exploded previously to this one.
+		  **/
+		function _CurrentRoundIsOver()
+		{
+			return round.bombHasBeenDefused || GetGameState() == eGameState.WinnerDetermined;
+		}
+
 		function _CreateLight(vector pos, string color)
 		{
 			vector lightpos = pos
@@ -122,7 +131,7 @@ void function InitBombClass()
 			// constant white light
 			this.light = expect entity(this._CreateLight(origin, "255 255 255"))
 			for (int i=0; i<one_second_bips_count; i+=1) {
-				if (round.bombHasBeenDefused) return;
+				if (this._CurrentRoundIsOver()) return;
 				thread this._Bip(origin, false)
 				wait 1
 			}
@@ -132,12 +141,12 @@ void function InitBombClass()
 			this.light = expect entity(this._CreateLight(origin, "255 0 0"))
 
 			for (int i=0; i<half_second_bips_count; i+=1) {
-				if (round.bombHasBeenDefused) return;
+				if (this._CurrentRoundIsOver()) return;
 				thread this._Bip(origin, true)
 				wait 0.5
 			}
 
-			if (round.bombHasBeenDefused) return;
+			if (this._CurrentRoundIsOver()) return;
 
 			// if it blows, team who planted it wins
 			SetWinner ( expect entity(this.terrorist).GetTeam() )
