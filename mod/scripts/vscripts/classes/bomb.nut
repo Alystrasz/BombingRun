@@ -122,6 +122,9 @@ void function InitBombClass()
 			int one_second_bips_count = GetConVarInt("br_bomb_1sec_ticks_count")
 			int half_second_bips_count = GetConVarInt("br_bomb_halfsec_ticks_count")
 
+			// set round duration to bomb explosion time
+			SetServerVar( "roundEndTime", Time() + (two_second_bips_count * 2) + (one_second_bips_count) + (half_second_bips_count * 0.5) + 0.1)
+
 			for (int i=0; i<two_second_bips_count; i+=1) {
 				if (round.bombHasBeenDefused) return;
 				thread this._Bip(origin, false)
