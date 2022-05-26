@@ -17,6 +17,9 @@ void function InitBombClass()
 			this.origin = player.GetOrigin()
             this.delay = 3
 
+			// Give credit to whoever planted the bomb
+			player.AddToPlayerGameStat( PGS_TITAN_KILLS, 1 )
+
 			foreach(entity online in GetPlayerArray()) {
                 Remote_CallFunction_NonReplay(online, "ServerCallback_AnnounceBombPlanted")
             }
