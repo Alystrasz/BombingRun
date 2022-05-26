@@ -15,6 +15,8 @@ void function CreateGamemode() {
     // No titans so use titan thing for batteries
 	GameMode_AddScoreboardColumnData( GAMEMODE_BR, "#SCOREBOARD_PILOT_KILLS", PGS_PILOT_KILLS, 2)
 	GameMode_AddScoreboardColumnData( GAMEMODE_BR, "Bombs planted", PGS_TITAN_KILLS, 2 )
+    GameMode_AddScoreboardColumnData( GAMEMODE_BR, "Bombs defused", PGS_DEFENSE_SCORE, 2)
+
     // Green because batteries are green.. idk
 	GameMode_SetColor( GAMEMODE_BR, [56, 181, 34, 255] )
 

@@ -72,6 +72,9 @@ void function InitBombClass()
 							SendTeamMessage( player.GetPlayerName() + " has defused the bomb.", player.GetTeam() )
 							SetWinner(player.GetTeam())
 
+							// Give credit to whoever defused the bomb
+							player.AddToPlayerGameStat( PGS_DEFENSE_SCORE, 1 )
+
 							PlayDialogueToAllPlayers (player.GetTeam(), "lts_bombDefusedDef", "lts_bombDefusedAtk")
 
 							return
