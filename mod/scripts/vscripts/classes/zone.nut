@@ -21,9 +21,10 @@ void function InitBombingZoneClass()
             entity bombMsgTrigger = CreateTriggerRadiusMultiple( zoneCenter, 2* Distance( zoneCenter, this.volumeMins ), [], TRIG_FLAG_NONE)
             AddCallback_ScriptTriggerEnter( bombMsgTrigger, void function(entity trigger, entity ent) {
                 if (IsValid(ent) && ent.IsPlayer()) {
-                    print(ent + " is closed to base " + this.name + ".")
-                    
-                    // TODO check if player has bomb before sending message
+                    if (ent.GetPlayerNetInt( "numSuperRodeoGrenades" ) == 0)
+                        return
+
+                    print(ent.GetPlayerName() + " has a bomb and is closed to base " + this.name + ".")
                     Remote_CallFunction_NonReplay(ent, "ServerCallback_AnnounceEnemyBaseNearby")
                 }
             } )
