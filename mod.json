@@ -38,6 +38,13 @@
         },
         
         {
+            "Path": "classes/droppable_bomb.nut",
+            "RunOn": "SERVER",
+            "ServerCallback": {
+                "Before": "InitDroppableBombClass"
+            }
+        },
+        {
             "Path": "classes/bomb.nut",
             "RunOn": "SERVER",
             "ServerCallback": {

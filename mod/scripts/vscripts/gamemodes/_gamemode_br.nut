@@ -38,6 +38,7 @@ int function BombingRunDecideWinner()
 void function SetupLevel()
 {
 	round.zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+	DroppableBomb( <1268.39, -3820.55, -237.67> )
 }
 
 void function SetupRound()
