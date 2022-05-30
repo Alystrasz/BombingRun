@@ -89,8 +89,15 @@ void function InitBombingZoneClass()
                             times[player.GetPlayerName()] <- currTime
                             player.MovementEnable()
                         }
+                    } 
+
+                    // bomb holder went out of the bombing zone
+                    else if (player == bombHolder) 
+                    {
+                        Remote_CallFunction_NonReplay( player, "ServerCallback_BombCanBePlantedHintHide" )
+                        bombHolder = null
                     }
-                    
+                }
                 WaitFrame()
             }
         }
