@@ -73,6 +73,7 @@ void function InitBombingZoneClass()
                             {
                                 // plant bomb
                                 round.bomb = Bomb(player)
+                                Remote_CallFunction_NonReplay( player, "ServerCallback_BombCanBePlantedHintHide" )
 
                                 print(player.GetPlayerName() + " triggered entity action.");
                                 player.MovementEnable()
