@@ -37,7 +37,7 @@ playlists
 				description "#GAMEMODE_BR_DESC"
 				hint "#GAMEMODE_BR_DESC"
 				abbreviation "BR"
-				image ffa
+				image ps
 				max_players 16
 				max_teams 2
 				classic_mp 1
