@@ -6,8 +6,8 @@ void function InitDroppableBombClass()
 {
     class DroppableBomb {
         bomb = null
-
-        constructor (vector origin, vector initialVelocity = <0, 0, 0>)
+        
+        constructor (vector origin)
         {
             entity bomb = CreateEntity( "prop_dynamic" )
             bomb.SetValueForModelKey($"models/weapons/at_satchel_charge/at_satchel_charge.mdl")
@@ -17,8 +17,21 @@ void function InitDroppableBombClass()
             this.bomb = bomb
 
             bomb.kv.solid = SOLID_VPHYSICS
-            bomb.SetVelocity( initialVelocity )
             bomb.SetAngularVelocity( 0, 500, 0 )
+
+            // pick-up trigger
+            entity bombTrigger = CreateTriggerRadiusMultiple( origin, 200, [], TRIG_FLAG_NONE)
+            AddCallback_ScriptTriggerEnter( bombTrigger, void function(entity trigger, entity ent) {
+                if (!IsValid( ent ))
+                    return
+                if (!ent.IsPlayer())
+                    return
+
+                print( "Bomb picked by " + ent.GetPlayerName() )
+
+                this.bomb.Destroy()
+                trigger.Destroy()
+            } )
         }
     }
 }
