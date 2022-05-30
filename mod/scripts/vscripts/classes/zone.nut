@@ -52,34 +52,45 @@ void function InitBombingZoneClass()
             table times = {}
             float currTime = Time()
             int bombPlantDelay = 3
+            entity bombHolder = null
 
             while(true)
             {
                 float currTime = Time()
                 foreach(player in GetPlayerArray())
                 {
-                    if (PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ) && player.UseButtonPressed())
+                    if (PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ))
                     {
-                        if (currTime - times[player.GetPlayerName()] >= bombPlantDelay)
-                        {
-                            // plant bomb
-							round.bomb = Bomb(player)
-
-							print(player.GetPlayerName() + " triggered entity action.");
-                            player.MovementEnable()
-
-                            // send message to all players
-                            PlayDialogueToAllPlayers (player.GetTeam(), "lts_bombPlantedAtk", "lts_bombPlantedDef")
-                            return
+                        // display plant bomb message if player has bomb
+                        if (player.GetPlayerNetInt( "numSuperRodeoGrenades") != 0 && bombHolder == null) {
+                            Remote_CallFunction_NonReplay(player, "ServerCallback_BombCanBePlantedHint")
+                            bombHolder = player
                         }
-                        player.MovementDisable()
-                        player.ConsumeDoubleJump()
-                    } else
-                    {
-                        times[player.GetPlayerName()] <- currTime
-                        player.MovementEnable()
+
+                        if (player.UseButtonPressed())
+                        {
+                            if (currTime - times[player.GetPlayerName()] >= bombPlantDelay)
+                            {
+                                // plant bomb
+                                round.bomb = Bomb(player)
+
+                                print(player.GetPlayerName() + " triggered entity action.");
+                                player.MovementEnable()
+
+                                // send message to all players
+                                PlayDialogueToAllPlayers (player.GetTeam(), "lts_bombPlantedAtk", "lts_bombPlantedDef")
+                                return
+                            }
+                            player.MovementDisable()
+                            player.ConsumeDoubleJump()
+                        }
+
+                        else {
+                            times[player.GetPlayerName()] <- currTime
+                            player.MovementEnable()
+                        }
                     }
-                }
+                    
                 WaitFrame()
             }
         }

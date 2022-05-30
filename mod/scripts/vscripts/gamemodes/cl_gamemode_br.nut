@@ -2,6 +2,7 @@ global function Cl_BR_Init
 global function ServerCallback_AnnounceBombPlanted
 global function ServerCallback_AnnounceEnemyBaseNearby
 global function ServerCallback_BombingRunUpdateZoneRui
+global function ServerCallback_BombCanBePlantedHint
 
 struct {
 	var zoneARui
@@ -60,4 +61,9 @@ void function ServerCallback_BombingRunUpdateZoneRui( int zoneHandle, int id )
 	RuiSetInt( rui, "viewerTeam", GetLocalClientPlayer().GetTeam() )
 	RuiTrackInt( rui, "hardpointTeamRelation", zone, RUI_TRACK_TEAM_RELATION_VIEWPLAYER )
 	RuiSetBool( rui, "isVisible", true )
+}
+
+void function ServerCallback_BombCanBePlantedHint()
+{
+	AddPlayerHint( 90.0, 0.5, $"", "Hold %use% to plant the bomb." )
 }
