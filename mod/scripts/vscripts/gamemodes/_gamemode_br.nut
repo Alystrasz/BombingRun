@@ -49,6 +49,12 @@ void function SetupRound()
 	round.bomb = null
 
 	round.zone.CheckForBombPlant()
+
+	// reset bomb numbers
+	foreach(player in GetPlayerArray())
+	{
+		player.SetPlayerNetInt( "numSuperRodeoGrenades", 0 )
+	}
 }
 
 function SendTeamMessage (string message, int team)
