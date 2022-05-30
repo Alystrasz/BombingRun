@@ -59,13 +59,15 @@ void function InitBombingZoneClass()
                 {
                     if (PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ))
                     {
+                        bool hasBomb = PlayerHasBomb( player )
+
                         // display plant bomb message if player has bomb
-                        if (PlayerHasBomb( player ) && bombHolder == null) {
+                        if (hasBomb && bombHolder == null) {
                             Remote_CallFunction_NonReplay(player, "ServerCallback_BombCanBePlantedHint")
                             bombHolder = player
                         }
 
-                        if (player.UseButtonPressed())
+                        if (hasBomb && player.UseButtonPressed())
                         {
                             if (currTime - times[player.GetPlayerName()] >= bombPlantDelay)
                             {
