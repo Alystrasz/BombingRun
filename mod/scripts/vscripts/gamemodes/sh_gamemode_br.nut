@@ -47,4 +47,6 @@ void function BRRegisterNetworkVars()
 	Remote_RegisterFunction( "ServerCallback_AnnounceBombPlanted" )
     Remote_RegisterFunction( "ServerCallback_AnnounceEnemyBaseNearby" )
     Remote_RegisterFunction( "ServerCallback_BombingRunUpdateZoneRui" )
+
+	RegisterNetworkedVariable( "numSuperRodeoGrenades", SNDC_PLAYER_GLOBAL, SNVT_INT, 0 )
 }

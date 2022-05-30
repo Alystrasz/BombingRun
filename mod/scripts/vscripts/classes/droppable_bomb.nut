@@ -28,6 +28,7 @@ void function InitDroppableBombClass()
                     return
 
                 print( "Bomb picked by " + ent.GetPlayerName() )
+                ent.SetPlayerNetInt( "numSuperRodeoGrenades", ent.GetPlayerNetInt( "numSuperRodeoGrenades" ) + 1 )
 
                 this.bomb.Destroy()
                 trigger.Destroy()
