@@ -2,6 +2,8 @@ untyped
 global function _BR_Init
 global function SendTeamMessage
 global function PlayDialogueToAllPlayers
+global function PlayerHasBomb
+global function SetPlayerBombCount
 global bool IS_BR = false
 
 global struct Match {
@@ -53,7 +55,7 @@ void function SetupRound()
 	// reset bomb numbers
 	foreach(player in GetPlayerArray())
 	{
-		player.SetPlayerNetInt( "numSuperRodeoGrenades", 0 )
+		SetPlayerBombCount( player, 0 )
 	}
 }
 
@@ -80,4 +82,19 @@ void function PlayDialogueToAllPlayers (int attacker_team, string attacker_messa
 	{
 		PlayFactionDialogueToPlayer( player.GetTeam() == attacker_team ? attacker_message : defender_message, player )
 	}
+}
+
+bool function PlayerHasBomb( entity player )
+{
+	if (!IsValid( player ))
+		return false
+	if (!player.IsPlayer())
+		return false
+
+	return player.GetPlayerNetInt( "numSuperRodeoGrenades" ) > 0
+}
+
+void function SetPlayerBombCount ( entity player, int bombCount )
+{
+	player.SetPlayerNetInt( "numSuperRodeoGrenades", bombCount )
 }

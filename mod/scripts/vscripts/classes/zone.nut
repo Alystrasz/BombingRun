@@ -20,13 +20,11 @@ void function InitBombingZoneClass()
             vector zoneCenter = Vector((this.volumeMins.x + this.volumeMaxs.x)/2, (this.volumeMins.y + this.volumeMaxs.y)/2, (this.volumeMins.z + this.volumeMaxs.z)/2)
             entity bombMsgTrigger = CreateTriggerRadiusMultiple( zoneCenter, 2* Distance( zoneCenter, this.volumeMins ), [], TRIG_FLAG_NONE)
             AddCallback_ScriptTriggerEnter( bombMsgTrigger, void function(entity trigger, entity ent) {
-                if (IsValid(ent) && ent.IsPlayer()) {
-                    if (ent.GetPlayerNetInt( "numSuperRodeoGrenades" ) == 0)
-                        return
+                if (!PlayerHasBomb( ent ))
+                    return
 
-                    print(ent.GetPlayerName() + " has a bomb and is closed to base " + this.name + ".")
-                    Remote_CallFunction_NonReplay(ent, "ServerCallback_AnnounceEnemyBaseNearby")
-                }
+                print(ent.GetPlayerName() + " has a bomb and is closed to base " + this.name + ".")
+                Remote_CallFunction_NonReplay(ent, "ServerCallback_AnnounceEnemyBaseNearby")
             } )
 
             // initialize UI indicator
@@ -62,7 +60,7 @@ void function InitBombingZoneClass()
                     if (PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ))
                     {
                         // display plant bomb message if player has bomb
-                        if (player.GetPlayerNetInt( "numSuperRodeoGrenades") != 0 && bombHolder == null) {
+                        if (PlayerHasBomb( player ) && bombHolder == null) {
                             Remote_CallFunction_NonReplay(player, "ServerCallback_BombCanBePlantedHint")
                             bombHolder = player
                         }
