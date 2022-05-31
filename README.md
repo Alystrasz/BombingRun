@@ -44,7 +44,3 @@ It will send a message to nearby bomb holder (indicating that he can go and plan
 - [ ] Bomb carrying system (being able to give the bomb to somebody else)
 - [x] Chat team messages
 - [x] Bomb sites UI indicators
-
-#### Fixes
-
-- [x] If bomb has been planted, whole attacking team dying should not end round

@@ -25,7 +25,7 @@ void function _BR_Init() {
 	SetShouldUseRoundWinningKillReplay( true )
 	SetRoundBased( true )
 	SetSwitchSidesBased( true )
-	SetRespawnsEnabled( false )
+	SetRespawnsEnabled( ruleSet == 0 )
 	Riff_ForceTitanAvailability( eTitanAvailability.Never )
 	ScoreEvent_SetupEarnMeterValuesForMixedModes()
 	AddCallback_GameStateEnter( eGameState.Prematch, SetupRound )
