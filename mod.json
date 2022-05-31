@@ -5,6 +5,10 @@
     "RequiredOnClient": true,
     "ConVars": [
         {
+            "Name": "br_rules",
+            "DefaultValue": "0"
+        },
+        {
             "Name": "br_bomb_2sec_ticks_count",
             "DefaultValue": "5"
         },

@@ -8,6 +8,11 @@ It requires you to plant a bomb in a base, and defend it until it explodes to ge
 
 #### Rules
 
+By setting `br_rules` configuration variable, you can use given rules sets:
+* **0 (default rules)**: one bomb spawns at the center of the map, both teams must fight for the bomb control, respawn is enabled.
+* **1 (TODO)**: one team must plant the bomb, the other must prevent it from doing so; roles are switched at half-time; respawn is disabled.
+* **2 (TODO)**: both teams must plant the bomb in the enemy base; respawn is disabled.
+
 #### Bomb ticks
 
 You can setup bomb ticking duration (= time from bomb planted to bomb explosion) by setting number of ticks for each of the following duration:
