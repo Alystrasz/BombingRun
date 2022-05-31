@@ -10,6 +10,7 @@ global struct Match {
 	bool bombHasBeenDefused
 	var bomb = null
 	var zone = null
+	var droppable_bomb = null
 }
 
 global Match round
@@ -43,7 +44,6 @@ int function BombingRunDecideWinner()
 void function SetupLevel()
 {
 	round.zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
-	DroppableBomb( <1268.39, -3820.55, -237.67> )
 }
 
 void function SetupRound()
@@ -54,6 +54,10 @@ void function SetupRound()
 	round.bomb = null
 
 	round.zone.CheckForBombPlant()
+	
+	if (round.droppable_bomb)
+		round.droppable_bomb.Destroy()
+	round.droppable_bomb = DroppableBomb( <1268.39, -3820.55, -237.67> )
 
 	// reset bomb numbers
 	foreach(player in GetPlayerArray())

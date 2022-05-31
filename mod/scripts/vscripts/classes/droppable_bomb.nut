@@ -6,6 +6,7 @@ void function InitDroppableBombClass()
 {
     class DroppableBomb {
         bomb = null
+        trigger = null
         
         constructor (vector origin)
         {
@@ -20,8 +21,8 @@ void function InitDroppableBombClass()
             bomb.SetAngularVelocity( 0, 500, 0 )
 
             // pick-up trigger
-            entity bombTrigger = CreateTriggerRadiusMultiple( origin, 30, [], TRIG_FLAG_NONE)
-            AddCallback_ScriptTriggerEnter( bombTrigger, void function(entity trigger, entity ent) {
+            this.trigger = CreateTriggerRadiusMultiple( origin, 30, [], TRIG_FLAG_NONE)
+            AddCallback_ScriptTriggerEnter( expect entity(this.trigger), void function(entity trigger, entity ent) {
                 if (!IsValid( ent ))
                     return
                 if (!ent.IsPlayer())
@@ -32,8 +33,18 @@ void function InitDroppableBombClass()
                 Remote_CallFunction_NonReplay( ent, "ServerCallback_YouHaveTheBomb" )
 
                 this.bomb.Destroy()
-                trigger.Destroy()
+                this.trigger.Destroy()
+                this.bomb = null
+                this.trigger = null
             } )
+        }
+
+        function Destroy()
+        {
+            if (this.trigger)
+                this.trigger.Destroy()
+            if (this.bomb)
+                this.bomb.Destroy()
         }
     }
 }
