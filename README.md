@@ -47,4 +47,4 @@ It will send a message to nearby bomb holder (indicating that he can go and plan
 
 #### Fixes
 
-- [ ] If bomb has been planted, whole attacking team dying should not end round
+- [x] If bomb has been planted, whole attacking team dying should not end round

@@ -27,7 +27,6 @@ void function _BR_Init() {
 	SetSwitchSidesBased( true )
 	SetRespawnsEnabled( false )
 	Riff_ForceTitanAvailability( eTitanAvailability.Never )
-	Riff_ForceSetEliminationMode( eEliminationMode.Pilots )
 	ScoreEvent_SetupEarnMeterValuesForMixedModes()
 	AddCallback_GameStateEnter( eGameState.Prematch, SetupRound )
 	SetTimeoutWinnerDecisionFunc( BombingRunDecideWinner )
