@@ -29,6 +29,7 @@ void function InitDroppableBombClass()
 
                 print( "Bomb picked by " + ent.GetPlayerName() )
                 SetPlayerBombCount( ent, 1 )
+                Remote_CallFunction_NonReplay( ent, "ServerCallback_YouHaveTheBomb" )
 
                 this.bomb.Destroy()
                 trigger.Destroy()

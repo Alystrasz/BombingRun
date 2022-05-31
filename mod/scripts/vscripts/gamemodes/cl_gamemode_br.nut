@@ -4,6 +4,7 @@ global function ServerCallback_AnnounceEnemyBaseNearby
 global function ServerCallback_BombingRunUpdateZoneRui
 global function ServerCallback_BombCanBePlantedHint
 global function ServerCallback_BombCanBePlantedHintHide
+global function ServerCallback_YouHaveTheBomb
 
 struct {
 	var zoneARui
@@ -40,6 +41,18 @@ void function ServerCallback_AnnounceEnemyBaseNearby()
 	Announcement_SetTitleColor( announcement, <1,0,0> )
 	Announcement_SetPurge( announcement, true )
 	Announcement_SetPriority( announcement, 200 ) //Be higher priority than Titanfall ready indicator etc
+	Announcement_SetSoundAlias( announcement, SFX_HUD_ANNOUNCE_QUICK )
+	Announcement_SetStyle( announcement, ANNOUNCEMENT_STYLE_QUICK )
+	AnnouncementFromClass( GetLocalViewPlayer(), announcement )
+}
+
+void function ServerCallback_YouHaveTheBomb()
+{	
+	AnnouncementData announcement = Announcement_Create( "#GAMEMODE_BR_YOU_HAVE_BOMB_TITLE" )
+	Announcement_SetSubText( announcement, "#GAMEMODE_BR_YOU_HAVE_BOMB_TEXT" )
+	Announcement_SetTitleColor( announcement, <1,0,0> )
+	Announcement_SetPurge( announcement, true )
+	Announcement_SetPriority( announcement, 200 )
 	Announcement_SetSoundAlias( announcement, SFX_HUD_ANNOUNCE_QUICK )
 	Announcement_SetStyle( announcement, ANNOUNCEMENT_STYLE_QUICK )
 	AnnouncementFromClass( GetLocalViewPlayer(), announcement )
