@@ -17,6 +17,10 @@ global Match round
 void function _BR_Init() {
 	IS_BR = true
 
+	int ruleSet = GetConVarInt("br_rules")
+	if (ruleSet != 0)
+		throw "Rules sets different than 0 are not implemented yet."
+
 	ClassicMP_SetCustomIntro( ClassicMP_DefaultNoIntro_Setup, 10 )
 	SetShouldUseRoundWinningKillReplay( true )
 	SetRoundBased( true )
