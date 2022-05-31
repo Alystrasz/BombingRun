@@ -20,7 +20,7 @@ void function InitDroppableBombClass()
             bomb.SetAngularVelocity( 0, 500, 0 )
 
             // pick-up trigger
-            entity bombTrigger = CreateTriggerRadiusMultiple( origin, 200, [], TRIG_FLAG_NONE)
+            entity bombTrigger = CreateTriggerRadiusMultiple( origin, 30, [], TRIG_FLAG_NONE)
             AddCallback_ScriptTriggerEnter( bombTrigger, void function(entity trigger, entity ent) {
                 if (!IsValid( ent ))
                     return
