@@ -75,7 +75,7 @@ void function InitBombingZoneClass()
                                 round.bomb = Bomb(player)
                                 Remote_CallFunction_NonReplay( player, "ServerCallback_BombCanBePlantedHintHide" )
 
-                                print(player.GetPlayerName() + " triggered entity action.");
+                                // terrorist can move again
                                 player.MovementEnable()
 
                                 // send message to all players
