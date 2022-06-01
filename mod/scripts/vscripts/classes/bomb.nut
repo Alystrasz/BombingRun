@@ -20,6 +20,9 @@ void function InitBombClass()
 			// Give credit to whoever planted the bomb
 			player.AddToPlayerGameStat( PGS_TITAN_KILLS, 1 )
 
+			// Remove bomb from his inventory
+			SetPlayerBombCount( player, 0 )
+
 			foreach(entity online in GetPlayerArray()) {
                 Remote_CallFunction_NonReplay(online, "ServerCallback_AnnounceBombPlanted")
             }
