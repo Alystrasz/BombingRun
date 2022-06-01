@@ -52,4 +52,8 @@ void function BRRegisterNetworkVars()
     Remote_RegisterFunction( "ServerCallback_YouHaveTheBomb" )
 
 	RegisterNetworkedVariable( "numSuperRodeoGrenades", SNDC_PLAYER_GLOBAL, SNVT_INT, 0 )
+
+    #if CLIENT
+    RegisterNetworkedVariableChangeCallback_int( "numSuperRodeoGrenades", UpdateBombsCount )
+    #endif
 }

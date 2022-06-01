@@ -5,10 +5,12 @@ global function ServerCallback_BombingRunUpdateZoneRui
 global function ServerCallback_BombCanBePlantedHint
 global function ServerCallback_BombCanBePlantedHintHide
 global function ServerCallback_YouHaveTheBomb
+global function UpdateBombsCount
 
 struct {
 	var zoneARui
 	var zoneBRui
+	var bombRui
 } file
 
 
@@ -20,6 +22,7 @@ void function BombingRunCreateRui( entity player )
 {
 	file.zoneARui = CreateCockpitRui( $"ui/cp_hardpoint_marker.rpak", 200 )
 	file.zoneBRui = CreateCockpitRui( $"ui/cp_hardpoint_marker.rpak", 200 )
+	file.bombRui = CreateCockpitRui( $"ui/super_rodeo_hud.rpak" )
 }
 
 void function ServerCallback_AnnounceBombPlanted()
@@ -75,6 +78,16 @@ void function ServerCallback_BombingRunUpdateZoneRui( int zoneHandle, int id )
 	RuiSetInt( rui, "viewerTeam", GetLocalClientPlayer().GetTeam() )
 	RuiTrackInt( rui, "hardpointTeamRelation", zone, RUI_TRACK_TEAM_RELATION_VIEWPLAYER )
 	RuiSetBool( rui, "isVisible", true )
+}
+
+void function UpdateBombsCount( entity player, int old, int new, bool actuallyChanged )
+{
+	if ( IsLobby() )
+		return
+	if ( player != GetLocalViewPlayer() )
+		return
+
+	RuiSetInt( file.bombRui, "batteryCount", new )
 }
 
 void function ServerCallback_BombCanBePlantedHint()
