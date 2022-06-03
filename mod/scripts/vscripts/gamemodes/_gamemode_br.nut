@@ -8,6 +8,7 @@ global bool IS_BR = false
 
 global struct Match {
 	bool bombHasBeenDefused
+	bool hasSwitchedSides = false
 	var bomb = null
 	var zone = null
 	var droppable_bomb = null
@@ -52,6 +53,13 @@ void function SetupRound()
 	if (round.bomb)
 		round.bomb.Destroy()
 	round.bomb = null
+
+	if (HasSwitchedSides() && !round.hasSwitchedSides)
+	{
+		round.hasSwitchedSides = true
+		// TODO do this for all zones
+		round.zone.ToggleTeam()
+	}
 
 	round.zone.CheckForBombPlant()
 	

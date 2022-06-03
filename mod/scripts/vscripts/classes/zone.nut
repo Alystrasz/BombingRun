@@ -48,6 +48,16 @@ void function InitBombingZoneClass()
             thread this._CheckForBombPlant()
         }
 
+        /**
+          * Switches this zone's team to the opposite faction.
+          * This is used at halftime, when team spawns are swapped.
+          **/
+        function ToggleTeam()
+        {
+            this.team = this.team == TEAM_IMC ? TEAM_MILITIA : TEAM_IMC;
+            SetTeam( expect entity(this.indicator), expect int(this.team) )
+        }
+
         function _CheckForBombPlant() {
             table times = {}
             float currTime = Time()
