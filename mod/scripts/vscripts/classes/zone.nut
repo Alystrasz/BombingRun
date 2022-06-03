@@ -9,10 +9,12 @@ void function InitBombingZoneClass()
         volumeMins = null
         volumeMaxs = null
         indicator = null
+        team = 0
 
         constructor(string name, int team, var volumeMins, vector volumeMax)
         {
             this.name = name
+            this.team = team
             this.volumeMins = volumeMins
             this.volumeMaxs = volumeMax
 
@@ -57,7 +59,7 @@ void function InitBombingZoneClass()
                 float currTime = Time()
                 foreach(player in GetPlayerArray())
                 {
-                    if (PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ))
+                    if (player.GetTeam() != this.team && PointIsWithinBounds( player.GetOrigin(), expect vector(this.volumeMins), expect vector(this.volumeMaxs) ))
                     {
                         bool hasBomb = PlayerHasBomb( player )
 
