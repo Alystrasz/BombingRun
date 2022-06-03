@@ -45,6 +45,14 @@ int function BombingRunDecideWinner()
 void function SetupLevel()
 {
 	round.zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+
+	// terrorist drops the bomb when killed
+	AddDeathCallback( "player", void function (entity player, var damageInfo) {
+		if (PlayerHasBomb( player )) {
+			SetPlayerBombCount (player, 0) // remove bomb from inventory
+			round.droppable_bomb = DroppableBomb( player.GetOrigin() ) // spawn bomb on the ground
+		}
+	})
 }
 
 void function SetupRound()
