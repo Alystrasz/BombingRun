@@ -45,6 +45,7 @@ void function BRRegisterNetworkVars()
 		return
 
 	Remote_RegisterFunction( "ServerCallback_AnnounceBombPlanted" )
+    Remote_RegisterFunction( "ServerCallback_AnnounceBombWasDropped" )
     Remote_RegisterFunction( "ServerCallback_AnnounceEnemyBaseNearby" )
     Remote_RegisterFunction( "ServerCallback_BombingRunUpdateZoneRui" )
     Remote_RegisterFunction( "ServerCallback_BombCanBePlantedHint" )

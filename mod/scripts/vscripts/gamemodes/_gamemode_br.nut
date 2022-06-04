@@ -56,6 +56,14 @@ void function SetupLevel()
 		if (PlayerHasBomb( player )) {
 			SetPlayerBombCount (player, 0) // remove bomb from inventory
 			round.droppable_bomb = DroppableBomb( player.GetOrigin() ) // spawn bomb on the ground
+
+			// tell everyone he dropped the bomb
+			int playerHandle = player.GetEncodedEHandle()
+			foreach(player in GetPlayerArray())
+			{
+				Remote_CallFunction_NonReplay( player, "ServerCallback_AnnounceBombWasDropped", playerHandle )
+				SetPlayerBombCount( player, 0 )
+			}
 		}
 	})
 }

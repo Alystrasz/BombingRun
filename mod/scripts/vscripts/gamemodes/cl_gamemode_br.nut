@@ -1,5 +1,6 @@
 global function Cl_BR_Init
 global function ServerCallback_AnnounceBombPlanted
+global function ServerCallback_AnnounceBombWasDropped
 global function ServerCallback_AnnounceEnemyBaseNearby
 global function ServerCallback_BombingRunUpdateZoneRui
 global function ServerCallback_BombCanBePlantedHint
@@ -32,6 +33,22 @@ void function ServerCallback_AnnounceBombPlanted()
 	Announcement_SetTitleColor( announcement, <1,0,0> )
 	Announcement_SetPurge( announcement, true )
 	Announcement_SetPriority( announcement, 200 ) //Be higher priority than Titanfall ready indicator etc
+	Announcement_SetSoundAlias( announcement, SFX_HUD_ANNOUNCE_QUICK )
+	Announcement_SetStyle( announcement, ANNOUNCEMENT_STYLE_QUICK )
+	AnnouncementFromClass( GetLocalViewPlayer(), announcement )
+}
+
+void function ServerCallback_AnnounceBombWasDropped( int playerHandle )
+{
+	entity player = GetEntityFromEncodedEHandle( playerHandle )
+	if (!IsValid(player))
+		return
+
+	AnnouncementData announcement = Announcement_Create( "#GAMEMODE_BR_BOMB_DROPPED_TITLE" )
+	Announcement_SetSubText( announcement, player.GetPlayerName() + " " + Localize( "#GAMEMODE_BR_BOMB_DROPPED_TEXT" ))
+	Announcement_SetTitleColor( announcement, <1,0,0> )
+	Announcement_SetPurge( announcement, true )
+	Announcement_SetPriority( announcement, 200 )
 	Announcement_SetSoundAlias( announcement, SFX_HUD_ANNOUNCE_QUICK )
 	Announcement_SetStyle( announcement, ANNOUNCEMENT_STYLE_QUICK )
 	AnnouncementFromClass( GetLocalViewPlayer(), announcement )
