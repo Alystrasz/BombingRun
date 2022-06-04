@@ -4,6 +4,13 @@ global var Bomb
 
 void function InitBombClass()
 {
+	/**
+	 * This gameobject is a bomb that spawns on the level floor when a player holding a bomb 
+	 * item plants it in the enemy base.
+	 * It will tick (e.g. emit a light flash and a sound) several times before exploding, giving
+	 * the win to the team who planted it.
+	 * Players of the opposite team can defuse it, which will grant them the win.
+	 **/
     class Bomb {
 		origin = null
 		terrorist = null
@@ -26,6 +33,8 @@ void function InitBombClass()
 			foreach(entity online in GetPlayerArray()) {
                 Remote_CallFunction_NonReplay(online, "ServerCallback_AnnounceBombPlanted")
             }
+
+			// create gameobject on map floor
             entity bomb = CreateEntity( "prop_dynamic" )
             bomb.SetValueForModelKey($"models/weapons/at_satchel_charge/at_satchel_charge.mdl")
             bomb.SetOrigin( player.GetOrigin() )
@@ -46,9 +55,9 @@ void function InitBombClass()
 		}
 
 		/**
-		  * This allows to trigger some code if a player kept use button hold for a given 
-		  * time (in seconds).
-		  **/
+		 * This allows to trigger some code if a player kept use button hold for a given 
+		 * time (in seconds).
+		 **/
 		function _CheckHoldState()
 		{
 			table times = {}
@@ -98,14 +107,18 @@ void function InitBombClass()
 		}
 
 		/**
-		  * This allows the bomb to check if current round is over, not to explode if other bomb 
-		  * exploded previously to this one.
-		  **/
+		 * This allows the bomb to check if current round is over, not to explode if other bomb 
+		 * exploded previously to this one.
+		 **/
 		function _CurrentRoundIsOver()
 		{
 			return round.bombHasBeenDefused || GetGameState() == eGameState.WinnerDetermined;
 		}
 
+		/**
+		 * Creates a light of desired color, from a bomb's position.
+		 * Light origin is adapted to match the satchel model light position.
+		 **/
 		function _CreateLight(vector pos, string color)
 		{
 			vector lightpos = pos
@@ -115,6 +128,11 @@ void function InitBombClass()
 			return CreateLightSprite (lightpos, <0,0,0>, color, 0.2)
 		}
 
+		/**
+		 * Emits a "bip" sound and a white light flash on a given position.
+		 * `lastSeconds` argument is used when bomb is close from explosion; this will emit a
+		 * different sound when flag is raised.
+		 **/
 		function _Bip(vector pos, bool lastSeconds)
 		{
 			EmitSoundAtPosition( TEAM_UNASSIGNED, pos, lastSeconds ? "ui_ingame_markedfordeath_countdowntoyouaremarked" : "ui_ingame_markedfordeath_countdowntomarked")
@@ -124,6 +142,12 @@ void function InitBombClass()
 			light.Destroy()
 		}
 
+		/**
+		 * Starts current bomb explosion countdown.
+		 * It will tick (e.g. emit a light flash and a sound) several times before exploding, giving
+	 	 * the win to the team who planted it.
+		 * Bomb countdown duration can be configured through several configuration variables.
+		 **/
 		function _StartExplosionCountdown() 
 		{
 			vector origin = expect entity(this.bomb).GetOrigin()
@@ -165,6 +189,10 @@ void function InitBombClass()
 			thread this._TriggerExplosion()
 		}
 
+		/**
+		 * Does the boom.
+		 * This will kill all players within range, no matter their team.
+		 **/
 		function _TriggerExplosion()
 		{
 			int innerRadius = 0
@@ -175,6 +203,7 @@ void function InitBombClass()
 			thread __CreateFxInternal( TITAN_NUCLEAR_CORE_FX_1P, null, "", expect vector(this.origin), Vector(0,RandomInt(360),0), C_PLAYFX_SINGLE, null, 1, expect entity(this.terrorist) )
 			thread __CreateFxInternal( TITAN_NUCLEAR_CORE_FX_3P, null, "", expect vector(this.origin + Vector( 0, 0, -100 )), Vector(0,RandomInt(360),0), C_PLAYFX_SINGLE, null, 6, expect entity(this.terrorist) )
 			
+			// shake camera and emit some sounds
 			CreateShake(expect entity(this.bomb).GetOrigin())
 			EmitSoundAtPosition( TEAM_IMC, expect vector(this.origin), "titan_nuclear_death_explode" )
 			EmitSoundAtPosition( TEAM_MILITIA, expect vector(this.origin), "titan_nuclear_death_explode" )
@@ -194,6 +223,10 @@ void function InitBombClass()
 			this.bomb.UnsetUsable()
 		}
 
+		/**
+         * Destroys all entities related to this bomb.
+         * This is called between rounds to ensure there are no several bombs in a single round.
+         **/
 		function Destroy()
 		{
 			this.bomb.Hide()
