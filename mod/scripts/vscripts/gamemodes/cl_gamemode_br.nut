@@ -2,6 +2,7 @@ global function Cl_BR_Init
 global function ServerCallback_AnnounceBombPlanted
 global function ServerCallback_AnnounceBombWasDropped
 global function ServerCallback_AnnounceEnemyBaseNearby
+global function ServerCallback_BombingRunInitBombIcon
 global function ServerCallback_BombingRunUpdateZoneRui
 global function ServerCallback_BombCanBePlantedHint
 global function ServerCallback_BombCanBePlantedHintHide
@@ -94,6 +95,18 @@ void function ServerCallback_BombingRunUpdateZoneRui( int zoneHandle, int id )
 	RuiTrackFloat3( rui, "pos", zone, RUI_TRACK_OVERHEAD_FOLLOW )
 	RuiSetInt( rui, "viewerTeam", GetLocalClientPlayer().GetTeam() )
 	RuiTrackInt( rui, "hardpointTeamRelation", zone, RUI_TRACK_TEAM_RELATION_VIEWPLAYER )
+	RuiSetBool( rui, "isVisible", true )
+}
+
+void function ServerCallback_BombingRunInitBombIcon( int bombHandle )
+{
+	entity bomb = GetEntityFromEncodedEHandle( bombHandle )
+	if (!IsValid(bomb))
+		return
+
+	var rui = CreateCockpitRui( $"ui/fra_battery_icon.rpak" )
+	RuiTrackFloat3( rui, "pos", bomb, RUI_TRACK_OVERHEAD_FOLLOW )
+	RuiSetImage( rui, "imageName", $"rui/hud/gametype_icons/last_titan_standing/bomb_neutral" )
 	RuiSetBool( rui, "isVisible", true )
 }
 
