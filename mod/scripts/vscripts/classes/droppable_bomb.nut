@@ -45,6 +45,12 @@ void function InitDroppableBombClass()
                 this.bomb = null
                 this.trigger = null
             } )
+
+            // create RUI logo
+            foreach( player in GetPlayerArray() )
+            {
+		        Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", this.bomb.GetEncodedEHandle() )
+            }
         }
 
         /**

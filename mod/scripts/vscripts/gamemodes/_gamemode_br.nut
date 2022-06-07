@@ -98,7 +98,6 @@ void function SetupRound()
 	foreach(player in GetPlayerArray())
 	{
 		SetPlayerBombCount( player, 0 )
-		Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", round.droppable_bomb.bomb.GetEncodedEHandle() )
 	}
 }
 
