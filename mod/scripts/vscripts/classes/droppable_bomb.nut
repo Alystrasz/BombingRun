@@ -39,10 +39,12 @@ void function InitDroppableBombClass()
                 SetPlayerBombCount( ent, 1 )
                 Remote_CallFunction_NonReplay( ent, "ServerCallback_YouHaveTheBomb" )
 
+                // make RUI logo follow player
+                this.bomb.SetParent( ent )
+
                 // destroy the gameobject on the floor
-                this.bomb.Destroy()
+                this.bomb.Hide()
                 this.trigger.Destroy()
-                this.bomb = null
                 this.trigger = null
             } )
 
