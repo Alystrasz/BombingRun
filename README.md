@@ -42,5 +42,8 @@ It will send a message to nearby bomb holder (indicating that he can go and plan
 - [x] Put some light effects on the bomb
 - [x] Bomb holder indicator (YOU HAVE THE BOMB)
 - [ ] Bomb carrying system (being able to give the bomb to somebody else)
+- [ ] Translate prompt messages
+- [ ] Init bomb icon on sides switch
+- [ ] Hide RUI bomb icon to bomb holder
 - [x] Chat team messages
 - [x] Bomb sites UI indicators
