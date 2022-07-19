@@ -55,6 +55,7 @@ void function SetupLevel()
 	AddDeathCallback( "player", void function (entity player, var damageInfo) {
 		if (PlayerHasBomb( player )) {
 			SetPlayerBombCount (player, 0) // remove bomb from inventory
+			round.droppable_bomb.Destroy()
 			round.droppable_bomb = DroppableBomb( player.GetOrigin() ) // spawn bomb on the ground
 
 			// tell everyone he dropped the bomb

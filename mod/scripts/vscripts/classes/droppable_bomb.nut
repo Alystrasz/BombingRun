@@ -41,6 +41,9 @@ void function InitDroppableBombClass()
 
                 // make RUI logo follow player
                 this.bomb.SetParent( ent )
+                this.bomb.SetOwner( ent )
+
+                this.UpdateRUIIcon()
 
                 // destroy the gameobject on the floor
                 this.bomb.Hide()
@@ -48,11 +51,7 @@ void function InitDroppableBombClass()
                 this.trigger = null
             } )
 
-            // create RUI logo
-            foreach( player in GetPlayerArray() )
-            {
-		        Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", this.bomb.GetEncodedEHandle() )
-            }
+            this.UpdateRUIIcon()
         }
 
         /**
@@ -65,6 +64,14 @@ void function InitDroppableBombClass()
                 this.trigger.Destroy()
             if (this.bomb)
                 this.bomb.Destroy()
+        }
+
+        function UpdateRUIIcon()
+        {
+            foreach( player in GetPlayerArray() )
+            {
+                Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", this.bomb.GetEncodedEHandle() )
+            }
         }
     }
 }
