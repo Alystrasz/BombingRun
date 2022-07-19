@@ -13,6 +13,7 @@ struct {
 	var zoneARui
 	var zoneBRui
 	var bombRui
+	var bombIconRui
 } file
 
 
@@ -104,10 +105,47 @@ void function ServerCallback_BombingRunInitBombIcon( int bombHandle )
 	if (!IsValid(bomb))
 		return
 
+	if (file.bombIconRui)
+	{
+		RuiDestroyIfAlive( file.bombIconRui )
+	}
+
 	var rui = CreateCockpitRui( $"ui/fra_battery_icon.rpak" )
 	RuiTrackFloat3( rui, "pos", bomb, RUI_TRACK_OVERHEAD_FOLLOW )
 	RuiSetImage( rui, "imageName", $"rui/hud/gametype_icons/last_titan_standing/bomb_neutral" )
 	RuiSetBool( rui, "isVisible", true )
+
+	file.bombIconRui = rui
+
+	thread BombIconThink( bomb );
+}
+
+void function BombIconThink (entity bomb)
+{
+	string ownerName = ""
+
+	while( true )
+	{
+		if (!IsValid (bomb)) {
+			return;
+		}
+
+		entity owner = bomb.GetOwner()
+
+		if (IsValid (owner))
+		{
+			if (ownerName == "") 
+			{
+				ownerName = owner.GetPlayerName()
+			} else if (!IsAlive(owner))
+			{
+				RuiDestroyIfAlive( file.bombIconRui );
+				return;
+			}
+		}
+
+		wait 0.2
+	}
 }
 
 void function UpdateBombsCount( entity player, int old, int new, bool actuallyChanged )
