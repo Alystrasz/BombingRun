@@ -123,25 +123,25 @@ void function ServerCallback_BombingRunInitBombIcon( int bombHandle )
 void function BombIconThink (entity bomb)
 {
 	string ownerName = ""
+	var rui = file.bombIconRui
 
+	OnThreadEnd(
+		function() : ( rui )
+		{
+			RuiDestroyIfAlive( rui );
+		}
+	)
+
+	bool found = false;
 	while( true )
 	{
-		if (!IsValid (bomb)) {
-			return;
-		}
-
+		if (!IsValid(bomb)) return;
 		entity owner = bomb.GetOwner()
 
-		if (IsValid (owner))
+		if (!found && IsValid( owner ))
 		{
-			if (ownerName == "") 
-			{
-				ownerName = owner.GetPlayerName()
-			} else if (!IsAlive(owner))
-			{
-				RuiDestroyIfAlive( file.bombIconRui );
-				return;
-			}
+			found = true;
+			owner.EndSignal( "OnDeath" )
 		}
 
 		wait 0.2
