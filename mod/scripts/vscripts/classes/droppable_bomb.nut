@@ -21,8 +21,8 @@ void function InitDroppableBombClass()
             bomb.SetValueForModelKey($"models/weapons/at_satchel_charge/at_satchel_charge.mdl")
             bomb.SetOrigin( origin )
             bomb.SetAngles( < -90, 0, 0> )
-            DispatchSpawn( bomb )
             this.bomb = bomb
+            DispatchSpawn( bomb )
             bomb.kv.solid = SOLID_VPHYSICS
             bomb.SetAngularVelocity( 0, 500, 0 )
 
@@ -43,15 +43,17 @@ void function InitDroppableBombClass()
                 this.bomb.SetParent( ent )
                 this.bomb.SetOwner( ent )
 
-                this.UpdateRUIIcon()
-
                 // destroy the gameobject on the floor
                 this.bomb.Hide()
                 this.trigger.Destroy()
                 this.trigger = null
             } )
 
-            this.UpdateRUIIcon()
+            // init bomb UI on all clients
+            foreach( player in GetPlayerArray() )
+            {
+                Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", this.bomb.GetEncodedEHandle() )
+            }
         }
 
         /**
@@ -62,15 +64,11 @@ void function InitDroppableBombClass()
         {
             if (this.trigger)
                 this.trigger.Destroy()
-            if (this.bomb)
+            if (this.bomb) {
+                this.bomb.SetOwner( null )
+                this.bomb.ClearParent()
+                this.bomb.Signal("OnDeath")
                 this.bomb.Destroy()
-        }
-
-        function UpdateRUIIcon()
-        {
-            foreach( player in GetPlayerArray() )
-            {
-                Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunInitBombIcon", this.bomb.GetEncodedEHandle() )
             }
         }
     }

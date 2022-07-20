@@ -55,8 +55,7 @@ void function SetupLevel()
 	AddDeathCallback( "player", void function (entity player, var damageInfo) {
 		if (PlayerHasBomb( player )) {
 			SetPlayerBombCount (player, 0) // remove bomb from inventory
-			round.droppable_bomb.Destroy()
-			round.droppable_bomb = DroppableBomb( player.GetOrigin() ) // spawn bomb on the ground
+			thread SpawnDroppableBomb(player.GetOrigin())
 
 			// tell everyone he dropped the bomb
 			int playerHandle = player.GetEncodedEHandle()
@@ -67,6 +66,17 @@ void function SetupLevel()
 			}
 		}
 	})
+}
+
+/**
+ * This removes current bomb, if there's any, and spawns a new one.
+ **/
+void function SpawnDroppableBomb (vector origin)
+{
+	if (round.droppable_bomb)
+		round.droppable_bomb.Destroy()
+	WaitFrame()
+	round.droppable_bomb = DroppableBomb( origin ) // spawn bomb on the ground
 }
 
 /**
@@ -90,10 +100,7 @@ void function SetupRound()
 
 	// start looking for players who'd want to explode base
 	round.zone.CheckForBombPlant()
-	
-	if (round.droppable_bomb)
-		round.droppable_bomb.Destroy()
-	round.droppable_bomb = DroppableBomb( <1268.39, -3820.55, -237.67> )
+	SpawnDroppableBomb( <1268.39, -3820.55, -237.67> )
 
 	// reset bomb numbers
 	foreach(player in GetPlayerArray())
