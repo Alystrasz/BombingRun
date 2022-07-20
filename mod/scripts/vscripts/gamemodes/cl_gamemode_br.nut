@@ -142,6 +142,13 @@ void function BombIconThink (entity bomb)
 		{
 			found = true;
 			owner.EndSignal( "OnDeath" )
+			RuiSetImage( 
+				file.bombIconRui, 
+				"imageName", 
+				owner.GetTeam() == GetLocalViewPlayer().GetTeam() 
+					? $"rui/hud/gametype_icons/raid/bomb_icon_friendly"
+					: $"rui/hud/gametype_icons/raid/bomb_icon_enemy" 
+			)
 		}
 
 		wait 0.2
