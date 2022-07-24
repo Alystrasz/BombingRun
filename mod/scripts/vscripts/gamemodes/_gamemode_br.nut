@@ -50,8 +50,11 @@ int function BombingRunDecideWinner()
 void function SetupLevel()
 {
 	round.zones.append(
-		BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
-	)
+		BombingZone("A", TEAM_MILITIA, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+	);
+	round.zones.append(
+		BombingZone("B", TEAM_IMC, Vector(-1275.05, 1105.35, -320), Vector(76.3677, 1717.62, -148.252))
+	);
 
 	// terrorist drops the bomb when killed
 	AddDeathCallback( "player", void function (entity player, var damageInfo) {
@@ -127,11 +130,10 @@ function SendTeamMessage (string message, int team)
 	}
 }
 
-// TODO call this for all zones
 void function BombingRunInitPlayer( entity player )
 {
-	foreach (zone in round.zones)
-		Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", zone.indicator.GetEncodedEHandle(), 0 )
+	foreach (index, zone in round.zones)
+		Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", zone.indicator.GetEncodedEHandle(), index )
 }
 
 /**
