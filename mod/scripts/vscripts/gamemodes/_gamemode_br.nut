@@ -10,7 +10,7 @@ global struct Match {
 	bool bombHasBeenDefused
 	bool hasSwitchedSides = false
 	var bomb = null
-	var zone = null
+	var zones = []
 	var droppable_bomb = null
 }
 
@@ -49,7 +49,9 @@ int function BombingRunDecideWinner()
  */
 void function SetupLevel()
 {
-	round.zone = BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+	round.zones.append(
+		BombingZone("A", TEAM_IMC, Vector(992.031, -5351.97, -206), Vector(1567.97, -4200.03, -89.315))
+	)
 
 	// terrorist drops the bomb when killed
 	AddDeathCallback( "player", void function (entity player, var damageInfo) {
@@ -94,12 +96,14 @@ void function SetupRound()
 	if (HasSwitchedSides() && !round.hasSwitchedSides)
 	{
 		round.hasSwitchedSides = true
-		// TODO do this for all zones
-		round.zone.ToggleTeam()
+		foreach (zone in round.zones)
+			zone.ToggleTeam()
 	}
 
 	// start looking for players who'd want to explode base
-	round.zone.CheckForBombPlant()
+	foreach (zone in round.zones)
+		zone.CheckForBombPlant()
+
 	SpawnDroppableBomb( <1268.39, -3820.55, -237.67> )
 
 	// reset bomb numbers
@@ -126,7 +130,8 @@ function SendTeamMessage (string message, int team)
 // TODO call this for all zones
 void function BombingRunInitPlayer( entity player )
 {
-	Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", round.zone.indicator.GetEncodedEHandle(), 0 )
+	foreach (zone in round.zones)
+		Remote_CallFunction_NonReplay( player, "ServerCallback_BombingRunUpdateZoneRui", zone.indicator.GetEncodedEHandle(), 0 )
 }
 
 /**
