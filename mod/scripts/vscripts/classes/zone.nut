@@ -79,7 +79,7 @@ void function InitBombingZoneClass()
                             bombHolder = player
                         }
 
-                        if (hasBomb && player.UseButtonPressed() && times[player.GetPlayerName()] != null)
+                        if (hasBomb && player.UseButtonPressed() && player.GetPlayerName() in times)
                         {
                             if (currTime - times[player.GetPlayerName()] >= bombPlantDelay)
                             {
