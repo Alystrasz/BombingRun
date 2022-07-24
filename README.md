@@ -4,6 +4,14 @@ Custom "Global Offensive" gamemode for Titanfall2.
 
 It requires you to plant a bomb in a base, and defend it until it explodes to get the win.
 
+## Changelog
+
+#### v0.0.1
+
+* Initial release
+
+## Development
+
 ### Gamemode configuration
 
 #### Rules
@@ -22,7 +30,7 @@ You can setup bomb ticking duration (= time from bomb planted to bomb explosion)
 
 By default, the bomb will tick 5 times with 2 seconds delay between ticks, 5 times with 1 second delay, and 10 times with 0.5 second delay before exploding.
 
-## Classes
+### Classes
 
 ##### Bomb
 
@@ -34,7 +42,7 @@ By instanciating a `BombingZone`, you can declare a zone where bombs can be plan
 
 It will send a message to nearby bomb holder (indicating that he can go and plant the bomb there), and will prevent him from moving when planting the bomb.
 
-## TODOs
+### TODOs
 
 #### Features
 
