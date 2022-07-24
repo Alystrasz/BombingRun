@@ -107,7 +107,7 @@ void function SetupRound()
 	foreach (zone in round.zones)
 		zone.CheckForBombPlant()
 
-	SpawnDroppableBomb( <1268.39, -3820.55, -237.67> )
+	SpawnDroppableBomb( < -48.8472, -1795.97, -272.103> )
 
 	// reset bomb numbers
 	foreach(player in GetPlayerArray())
