@@ -55,3 +55,7 @@ It will send a message to nearby bomb holder (indicating that he can go and plan
 - [ ] Hide RUI bomb icon to bomb holder
 - [x] Chat team messages
 - [x] Bomb sites UI indicators
+
+### Credits
+
+Publication CI stolen from [https://github.com/GreenTF/NSModTemplate](https://github.com/GreenTF/NSModTemplate)
