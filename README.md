@@ -4,6 +4,8 @@ Custom "Global Offensive" gamemode for Titanfall2.
 
 It requires you to plant a bomb in a base, and defend it until it explodes to get the win.
 
+![A pilot is defusing a bomb.](https://raw.githubusercontent.com/Alystrasz/BombingRun/master/assets/defusing_screenshot.png)
+
 ## Changelog
 
 #### v0.0.1
