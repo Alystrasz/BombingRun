@@ -43,7 +43,7 @@ jobs:
           # Package version to publish
           version: ${{ env.cleanVersion }} # This is the tag that was created in the release but without the leading 'v'
           # Description of the mod
-          description: Custom "Global Offensive" gamemode for Titanfall2. It requires you to plant a bomb in a base, and defend it until it explodes to get the win.
+          description: Custom 'Global Offensive' gamemode for Titanfall2. It requires you to plant a bomb in a base, and defend it until it explodes to get the win.
           # Thunderstore API token
           token: ${{ secrets.TS_KEY }} 
           # Directory to wrap the contents of the repo in
