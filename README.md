@@ -8,9 +8,12 @@ It requires you to plant a bomb in a base, and defend it until it explodes to ge
 
 ## Changelog
 
-#### v0.0.1
+#### v0.0.1 (initial release)
 
-* Initial release
+* Players can carry a bomb
+* When killed, bomb holder will drop it
+* Bomb can be planted in enemy base
+* When planted, bomb can be defused
 
 ## Development
 
