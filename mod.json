@@ -1,7 +1,7 @@
 {
     "Name": "Bombing Run",
     "LoadPriority": 2,
-    "Version": "0.0.1",
+    "Version": "0.0.2",
     "RequiredOnClient": true,
     "ConVars": [
         {

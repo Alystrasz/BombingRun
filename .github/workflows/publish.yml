@@ -32,7 +32,7 @@ jobs:
           echo cleanVersion=$(echo ${{github.ref_name}} | sed s/v//g) >> $GITHUB_ENV
       - uses: actions/checkout@v3
       - name: Upload Thunderstore Package
-        uses: GreenTF/upload-thunderstore-package@v1
+        uses: GreenTF/upload-thunderstore-package@v2.1
         with:
           community: northstar
           # Name of the team to publish the mod under
