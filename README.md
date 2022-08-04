@@ -8,6 +8,10 @@ It requires you to plant a bomb in a base, and defend it until it explodes to ge
 
 ## Changelog
 
+#### v0.0.3
+
+* Update Thunderstore upload CI configuration
+
 #### v0.0.2
 
 * Update Thunderstore upload CI configuration
