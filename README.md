@@ -8,6 +8,10 @@ It requires you to plant a bomb in a base, and defend it until it explodes to ge
 
 ## Changelog
 
+#### v0.0.4
+
+* Bomb icon is not displayed to bomb holder anymore
+
 #### v0.0.3
 
 * Update Thunderstore upload CI configuration
@@ -65,7 +69,7 @@ It will send a message to nearby bomb holder (indicating that he can go and plan
 - [ ] Bomb carrying system (being able to give the bomb to somebody else)
 - [ ] Translate prompt messages
 - [ ] Init bomb icon on sides switch
-- [ ] Hide RUI bomb icon to bomb holder
+- [x] Hide RUI bomb icon to bomb holder
 - [x] Chat team messages
 - [x] Bomb sites UI indicators
 

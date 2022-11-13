@@ -140,6 +140,10 @@ void function BombIconThink (entity bomb)
 
 		if (!found && IsValid( owner ))
 		{
+			// Bomb carrier does not need to see bomb icon
+			if ( owner == GetLocalViewPlayer() )
+				return;
+
 			found = true;
 			owner.EndSignal( "OnDeath" )
 			RuiSetImage( 
